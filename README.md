@@ -361,10 +361,10 @@ Plusieurs tests permettent de vérifier le bon fonctionnement du système :
 
 - Vérification de l'état de l'API avec `/health`.
 - Tests de prédiction avec différentes tailles de lots.
-  ![Prédiction Batch](screenshots/taille_batch1.png)
-  ![Prédiction Batch](screenshots/taille_batch2.png)
+  ![taille batch1](screenshots/taille_batch1.png)
+  ![taille batch2](screenshots/taille_batch2.png)
 - Validation des entrées invalides et des commentaires vides.
-  ![Prédiction Batch](screenshots/test_commentaire_vide.png)
+  ![test](screenshots/test_commentaire_vide.png)
 - Évaluation des performances du modèle.
 - Mesure du temps d'inférence.
 - Vérification du fonctionnement du conteneur Docker.
