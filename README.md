@@ -1,4 +1,4 @@
-Analyse de Sentiment des Commentaires YouTube
+# Analyse de Sentiment des Commentaires YouTube
 
 **Projet de Machine Learning – Analyse automatique des sentiments**
 
@@ -6,9 +6,9 @@ Ce projet consiste à développer une application intelligente permettant d'anal
 
 La solution repose sur un modèle de Machine Learning entraîné sur des commentaires textuels, exposé à travers une API REST avec FastAPI et intégré dans une extension Google Chrome.
 
+---
 
-
-1. Description du projet
+## 1. Description du projet
 
 L'objectif est de faciliter l'analyse des opinions des utilisateurs à partir des commentaires publiés sur YouTube.
 
@@ -22,7 +22,7 @@ L'application permet de :
 - Filtrer les commentaires selon leur sentiment.
 - Consulter les résultats directement depuis une extension Chrome.
 
-2. Technologies utilisées
+## 2. Technologies utilisées
 
 | Domaine | Technologies |
 |---|---|
@@ -38,7 +38,7 @@ L'application permet de :
 | Environnement Cloud | GitHub Codespaces |
 | Gestion de versions | Git, GitHub |
 
-3. Architecture technique
+## 3. Architecture technique
 
 Le projet est organisé autour de quatre composants principaux :
 
@@ -49,6 +49,7 @@ Le projet est organisé autour de quatre composants principaux :
 
 ### Architecture globale
 
+```text
              YouTube
                 |
                 v
@@ -79,14 +80,15 @@ Le projet est organisé autour de quatre composants principaux :
                 v
        Affichage des résultats
        et statistiques dans Chrome
-
+```
 
 ### Fonctionnement du système
 
 L'utilisateur ouvre une vidéo YouTube et lance l'extension. Les commentaires extraits sont envoyés à l'API FastAPI, qui utilise le modèle entraîné pour effectuer les prédictions. Les résultats sont ensuite renvoyés à l'extension pour être affichés sous forme de statistiques et de commentaires classés par sentiment.
 
-4. Structure du projet
+## 4. Structure du projet
 
+```text
 youtube-sentiment-analysis/
 │
 ├── chrome-extension/
@@ -134,7 +136,7 @@ youtube-sentiment-analysis/
 └── README.md
 ```
 
-5. Préparation des données et Machine Learning
+## 5. Préparation des données et Machine Learning
 
 Le développement du modèle suit les étapes suivantes :
 
@@ -177,15 +179,15 @@ Transformation des textes en représentations numériques à l'aide de TF-IDF, p
 
 ![Matrice de confusion](models/confusion_matrix.png)
 
-Les résultats de comparaison des algorithmes sont disponibles dans le fichier `models/comparaison_results.csv`.
+
 
 **Étape 6 – Sauvegarde**
 
 Le modèle sélectionné est sauvegardé dans `models/best_model.joblib` afin de pouvoir être réutilisé par l'API sans devoir effectuer un nouvel entraînement.
 
-6. Installation et utilisation
+## 6. Installation et utilisation
 
-6.1. Prérequis
+### 6.1. Prérequis
 
 Avant de commencer, il faut disposer de :
 
@@ -194,16 +196,15 @@ Avant de commencer, il faut disposer de :
 - Docker
 - Google Chrome
 
-6.2. Cloner le projet
+### 6.2. Cloner le projet
 
 ```bash
 git clone https://github.com/marouaelhour/youtube-sentiment-analysis.git
 cd youtube-sentiment-analysis
 ```
 
-6.3. Créer un environnement virtuel
+### 6.3. Créer un environnement virtuel
 
-Sous Windows :
 
 ```bash
 python -m venv venv
@@ -211,13 +212,13 @@ venv\Scripts\activate
 ```
 
 
-6.4. Installer les dépendances
+### 6.4. Installer les dépendances
 
 ```bash
 pip install -r requirements.txt
 ```
 
-6.5. Lancer l'API localement
+### 6.5. Lancer l'API localement
 
 Pour utiliser l'API locale avec le point d'entrée du projet :
 
@@ -239,28 +240,33 @@ Pour vérifier son état :
 curl http://127.0.0.1:8000/health
 ```
 
-7. Déploiement avec Docker
+## 7. Déploiement avec Docker
 
 L'application API est conteneurisée avec Docker afin de faciliter son exécution dans un environnement isolé.
 
-Construire l'image Docker
+### Construire l'image Docker
 
 ```bash
 docker build -t youtube-sentiment-api .
 ```
 
-Lancer le conteneur
+### Lancer le conteneur
 
+```bash
 docker run -d -p 7860:7860 --name youtube-api youtube-sentiment-api
+```
 
-Vérifier le conteneur
+### Vérifier le conteneur
 
+```bash
 docker ps
+```
 
-Vérifier le fonctionnement de l'API
+### Vérifier le fonctionnement de l'API
 
-
+```bash
 curl http://localhost:7860/health
+```
 
 ### Documentation Swagger
 
@@ -275,8 +281,9 @@ L'API est exécutée dans un conteneur Docker au sein de GitHub Codespaces.
 - **URL de l'API :** [Accéder à l'API](https://sturdy-space-palm-tree-7vgrvj576wxj3w59v-7860.app.github.dev)
 - **Documentation Swagger :** [Consulter Swagger](https://sturdy-space-palm-tree-7vgrvj576wxj3w59v-7860.app.github.dev/docs)
 
+**Remarque :** cette URL dépend du fonctionnement du Codespace et du conteneur Docker. Le service doit rester actif pour que l'API soit accessible.
 
-8. Extension Google Chrome
+## 8. Extension Google Chrome
 
 L'extension permet d'utiliser le système directement depuis YouTube.
 
@@ -314,7 +321,7 @@ L'extension permet d'utiliser le système directement depuis YouTube.
 
 ![Mode sombre](screenshots/dark-mode.png)
 
-## 🔌 9. API REST – FastAPI
+## 9. API REST – FastAPI
 
 L'API assure la communication entre l'extension Chrome et le modèle de Machine Learning.
 
@@ -348,7 +355,7 @@ L'API assure la communication entre l'extension Chrome et le modèle de Machine 
 
 ![Prédiction Batch](screenshots/api-prediction.png)
 
-10. Tests et validation
+## 10. Tests et validation
 
 Plusieurs tests permettent de vérifier le bon fonctionnement du système :
 
@@ -365,7 +372,7 @@ Plusieurs tests permettent de vérifier le bon fonctionnement du système :
 
 ![Conteneur Docker actif](screenshots/docker-container.png)
 
-Perspectives d'amélioration
+## 11. Perspectives d'amélioration
 
 Plusieurs améliorations peuvent être envisagées :
 
