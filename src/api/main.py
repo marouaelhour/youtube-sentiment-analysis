@@ -10,7 +10,7 @@ import os
 from src.api.schemas import PredictionRequest
 
 
-# 1. Création de l'application
+
 app = FastAPI(
     title="YouTube Sentiment Analysis API",
     description="API de classification des sentiments des commentaires YouTube",
@@ -18,7 +18,7 @@ app = FastAPI(
 )
 
 
-# 2. Configuration CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,7 +27,7 @@ app.add_middleware(
 )
 
 
-# 3. Chargement du modèle complet
+
 MODEL_PATH = "models/best_model.joblib"
 
 if not os.path.exists(MODEL_PATH):
@@ -38,7 +38,7 @@ if not os.path.exists(MODEL_PATH):
 model = joblib.load(MODEL_PATH)
 
 
-# 4. Correspondance entre les labels et les sentiments
+
 labels = {
     -1: "Négatif",
     0: "Neutre",
@@ -46,7 +46,7 @@ labels = {
 }
 
 
-# 5. Endpoint pour vérifier le fonctionnement de l'API
+
 @app.get("/health")
 def health():
 
@@ -57,7 +57,7 @@ def health():
     }
 
 
-# 6. Endpoint pour analyser plusieurs commentaires
+
 @app.post("/predict_batch")
 def predict_batch(request: PredictionRequest):
 
@@ -76,7 +76,7 @@ def predict_batch(request: PredictionRequest):
     try:
         start = time.perf_counter()
 
-        # Nettoyer les commentaires
+      
         comments = [
             str(comment).strip()
             for comment in request.comments
@@ -88,10 +88,10 @@ def predict_batch(request: PredictionRequest):
                 detail="Un commentaire est vide"
             )
 
-        # Transformer et prédire directement avec le pipeline
+       
         predictions = model.predict(comments)
 
-        # Calculer les scores de confiance si disponibles
+        
         if hasattr(model, "predict_proba"):
             probabilities = model.predict_proba(comments)
 
@@ -100,8 +100,7 @@ def predict_batch(request: PredictionRequest):
         elif hasattr(model, "decision_function"):
             scores = model.decision_function(comments)
 
-            # Scores convertis en valeurs indicatives,
-            # et non en probabilités calibrées.
+            
             if scores.ndim == 1:
                 scores = pd.DataFrame(scores).values
 
@@ -124,7 +123,7 @@ def predict_batch(request: PredictionRequest):
         else:
             confidences = [None] * len(predictions)
 
-        # Construire les résultats
+       
         results = []
 
         for i, prediction in enumerate(predictions):
@@ -140,7 +139,7 @@ def predict_batch(request: PredictionRequest):
                 )
             })
 
-        # Calculer les statistiques
+      
         counts = pd.Series(predictions).value_counts()
 
         total = len(predictions)

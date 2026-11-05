@@ -1,14 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Charger les données nettoyées
+
 df = pd.read_csv("data/processed/clean.csv")
 
-# Distribution des sentiments
+
 print("Distribution des classes :")
 print(df["label"].value_counts())
 
-# Graphique de distribution
+
 df["label"].value_counts().sort_index().plot(
     kind="bar"
 )
@@ -26,7 +26,7 @@ plt.tight_layout()
 plt.savefig("data/processed/distribution.png")
 plt.show()
 
-# Longueur des commentaires
+
 df["text_length"] = df["text"].apply(
     lambda x: len(x.split())
 )
@@ -37,7 +37,7 @@ print(df["text_length"].mean())
 print("\nLongueur maximale :")
 print(df["text_length"].max())
 
-# Histogramme
+
 df["text_length"].hist(bins=30)
 
 plt.title("Longueur des commentaires")

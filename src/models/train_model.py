@@ -25,14 +25,14 @@ from imblearn.over_sampling import RandomOverSampler
 
 def run():
 
-    # Créer le dossier models
+    
     os.makedirs("models", exist_ok=True)
 
-    # 1. Charger les données
+   
     train_data = pd.read_csv("data/processed/train.csv")
     test_data = pd.read_csv("data/processed/test.csv")
 
-    # TF-IDF attend une Series contenant les textes
+   
     X_train = train_data["text"].fillna("").astype(str)
     y_train = train_data["label"]
 
@@ -48,10 +48,7 @@ def run():
     print("\nDistribution des classes dans Test :")
     print(y_test.value_counts().sort_index())
 
-    # 2. Définir les algorithmes
-    # TF-IDF transforme les textes en valeurs numériques.
-    # RandomOverSampler équilibre uniquement les données Train.
-    # Le sampler est exécuté à chaque fold de validation croisée.
+   
 
     models = {
         "Logistic Regression": Pipeline([
@@ -76,7 +73,7 @@ def run():
         ])
     }
 
-    # 3. Optimiser Logistic Regression avec GridSearchCV
+    
     print("\nOptimisation de Logistic Regression...")
 
     param_grid = {
@@ -101,7 +98,6 @@ def run():
     print("\nMeilleurs paramètres :")
     print(grid_search.best_params_)
 
-    # 4. Entraîner et comparer les algorithmes
     trained_models = {
         "Logistic Regression": best_lr
     }
@@ -117,7 +113,7 @@ def run():
 
     print("\n========== COMPARAISON DES MODÈLES ==========")
 
-    # 5. Évaluer les trois algorithmes
+   
     for name, model in trained_models.items():
 
         y_pred = model.predict(X_test)
@@ -159,7 +155,7 @@ def run():
             zero_division=0
         ))
 
-    # Tableau comparatif
+    
     results_df = pd.DataFrame(results)
 
     results_df = results_df.sort_values(
@@ -176,13 +172,12 @@ def run():
         index=False
     )
 
-    # 6. Sélectionner le meilleur modèle
     best_name = results_df.iloc[0]["Algorithme"]
     best_model = trained_models[best_name]
 
     print("\nMeilleur modèle :", best_name)
 
-    # 7. Évaluation finale du meilleur modèle
+ 
     y_pred = best_model.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
@@ -202,7 +197,7 @@ def run():
         zero_division=0
     ))
 
-    # 8. Visualiser la matrice de confusion
+   
     cm = confusion_matrix(
         y_test,
         y_pred,
@@ -221,10 +216,10 @@ def run():
     plt.savefig("models/confusion_matrix.png")
     plt.show()
 
-    # 9. Mesurer le temps d'inférence pour 50 commentaires
+   
     batch = X_test.iloc[:50]
 
-    # Préparation du modèle avant la mesure
+   
     best_model.predict(batch)
 
     repetitions = 100
@@ -243,7 +238,7 @@ def run():
     print("\nTemps moyen d'inférence pour 50 commentaires :")
     print(round(inference_time, 2), "ms")
 
-    # 10. Vérifier les critères du TP
+    
     report_dict = classification_report(
         y_test,
         y_pred,
@@ -283,7 +278,7 @@ def run():
         "VALIDÉ" if time_ok else "NON VALIDÉ"
     )
 
-    # 11. Sauvegarder le meilleur modèle
+   
     joblib.dump(best_model, "models/best_model.joblib")
 
     print("\nMeilleur modèle sauvegardé dans models/best_model.joblib")
