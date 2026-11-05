@@ -14,11 +14,11 @@ function getYouTubeComments() {
         }
     });
 
-    // Supprimer les doublons et limiter à 50 commentaires
+    
     return [...new Set(comments)].slice(0, 50);
 }
 
-// Recevoir la demande du popup
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "GET_COMMENTS") {
         sendResponse({

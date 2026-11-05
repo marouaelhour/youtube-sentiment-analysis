@@ -10,7 +10,7 @@ const copyBtn = document.getElementById("copyBtn");
 let allResults = [];
 let currentFilter = "Tous";
 
-// 1. Analyser les commentaires
+
 analyzeBtn.addEventListener("click", async () => {
 
     analyzeBtn.disabled = true;
@@ -18,7 +18,7 @@ analyzeBtn.addEventListener("click", async () => {
     resultsElement.classList.add("hidden");
 
     try {
-        // Récupérer l'onglet YouTube
+        
         const [tab] = await chrome.tabs.query({
             active: true,
             currentWindow: true
@@ -29,7 +29,7 @@ analyzeBtn.addEventListener("click", async () => {
             throw new Error("Veuillez ouvrir une vidéo YouTube.");
         }
 
-        // Récupérer les commentaires
+        
         const response = await chrome.tabs.sendMessage(tab.id, {
             action: "GET_COMMENTS"
         });
@@ -45,7 +45,7 @@ analyzeBtn.addEventListener("click", async () => {
         statusElement.textContent =
             `${comments.length} commentaires récupérés. Analyse en cours...`;
 
-        // Envoyer les commentaires à FastAPI
+        
         const apiResponse = await fetch(API_URL, {
             method: "POST",
             headers: {
@@ -86,7 +86,7 @@ analyzeBtn.addEventListener("click", async () => {
 });
 
 
-// 2. Afficher les statistiques
+
 function displayStatistics(data) {
 
     const stats = data.statistics;
@@ -114,7 +114,7 @@ function displayStatistics(data) {
 }
 
 
-// 3. Afficher les commentaires selon le filtre
+
 function displayComments() {
 
     commentsResults.innerHTML = "";
@@ -161,7 +161,7 @@ function displayComments() {
 }
 
 
-// 4. Gérer les filtres
+
 document.querySelectorAll(".filter-btn").forEach(button => {
 
     button.addEventListener("click", () => {
@@ -185,7 +185,7 @@ function updateFilterButtons() {
 }
 
 
-// 5. Mode sombre / clair
+
 themeBtn.addEventListener("click", () => {
 
     document.body.classList.toggle("dark");
@@ -199,7 +199,7 @@ themeBtn.addEventListener("click", () => {
 });
 
 
-// 6. Copier les résultats
+
 copyBtn.addEventListener("click", async () => {
 
     if (allResults.length === 0) {
